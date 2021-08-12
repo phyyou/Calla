@@ -9,11 +9,17 @@ import {
   Tr,
   Th,
   Td,
+  Box,
   TableCaption,
   VStack,
   Text,
   Img,
   Heading,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from "@chakra-ui/react";
 
 export default function Home({ song }: { song: ISongInfo }) {
@@ -33,23 +39,43 @@ export default function Home({ song }: { song: ISongInfo }) {
           <audio controls={true} autoPlay={true} loop={true}>
             <source src={song.file}></source>
           </audio>
-          <Table display={{ base: "none", md: "table" }} variant="simple">
-            <TableCaption>곡 정보</TableCaption>
-            <Thead>
-              <Tr>
-                {Object.keys(song.info).map((keyName, i) => (
-                  <Th key={`key-${i}}`}>{keyName}</Th>
-                ))}
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                {Object.keys(song.info).map((keyName, i) => (
-                  <Td key={`info-${i}`}>{song.info[keyName] as any}</Td>
-                ))}
-              </Tr>
-            </Tbody>
-          </Table>
+          <Box textAlign={"center"}>
+            제목: {song.info["Work Title\n"]}
+            <br />
+            작곡가: {song.info["Composer\n"]}
+          </Box>
+          <Accordion allowToggle>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left">
+                    곡 상세정보
+                    <br />
+                    (모바일은 주의: 커서 한눈에 보지 못함)
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>
+                      {Object.keys(song.info).map((keyName, i) => (
+                        <Th key={`key-${i}}`}>{keyName}</Th>
+                      ))}
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    <Tr>
+                      {Object.keys(song.info).map((keyName, i) => (
+                        <Td key={`info-${i}`}>{song.info[keyName] as any}</Td>
+                      ))}
+                    </Tr>
+                  </Tbody>
+                </Table>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
         </VStack>
       </Container>
     </>
