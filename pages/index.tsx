@@ -51,7 +51,7 @@ export default function Home({ song }: { song: ISongInfo }) {
                   <Box flex="1" textAlign="left">
                     곡 상세정보
                     <br />
-                    (모바일은 주의: 커서 한눈에 보지 못함)
+                    (주의: 커서 한눈에 보지 못함)
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
