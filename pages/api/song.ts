@@ -15,7 +15,9 @@ interface IQueryIMSLP {
 
 export interface ISongInfo {
   file: string;
-  info: object;
+  info: {
+    [index: string]: string;
+  };
 }
 
 // interface ISongIMSLP {
@@ -77,6 +79,7 @@ const getInfoByFilenameInIMSLP = async (title: string) => {
   // @ts-ignore
   const songInfoLink: string = document
     .querySelector("#mw-imagepage-linkstoimage-ns0")
+    // @ts-ignore
     .childNodes[0]?.getAttribute("href");
   const songInfo = await getInfoInIMSLP(`https://imslp.org${songInfoLink}`);
   console.log(fileLink, songInfo);
