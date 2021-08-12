@@ -72,15 +72,13 @@ const getInfoByFilenameInIMSLP = async (title: string) => {
   const res = await fetch(`https://imslp.org/wiki/${title}`);
   const htmlText = await res.text();
   const document = parse(htmlText);
-  // @ts-ignore
   const fileLink: string = `https://imslp.org${document
     .querySelector("a.internal")
     .getAttribute("href")}`;
-  // @ts-ignore
-  const songInfoLink: string = document
-    .querySelector("#mw-imagepage-linkstoimage-ns0")
-    // @ts-ignore
-    .childNodes[0]?.getAttribute("href");
+  const songInfoLinkTag: any = document.querySelector(
+    "#mw-imagepage-linkstoimage-ns0"
+  ).childNodes[0];
+  const songInfoLink: string = songInfoLinkTag.getAttribute("href");
   const songInfo = await getInfoInIMSLP(`https://imslp.org${songInfoLink}`);
   console.log(fileLink, songInfo);
   return {
