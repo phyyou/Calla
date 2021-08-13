@@ -1,5 +1,6 @@
 import { parse } from "node-html-parser";
 import useSWR from "swr";
+import { Mutator } from "swr/dist/types";
 import { fetcher } from "../fetcher";
 import { IQueryFileIMSLP, IQueryIMSLP, ISongInfo } from "../types/song";
 
@@ -42,7 +43,6 @@ const getInfoInIMSLP = async (link: string) => {
       [tr.querySelector("th").innerText]: tr.querySelector("td").innerText,
     };
   });
-
   return info;
 };
 
@@ -60,6 +60,7 @@ const getInfoByFilenameInIMSLP = async (title: string) => {
   const songInfo = await getInfoInIMSLP(`https://imslp.org${songInfoLink}`);
   return {
     file: fileLink,
+    copy: `https://imslp.org/wiki/${title}`,
     info: songInfo,
   };
 };
@@ -70,7 +71,14 @@ export const getSongInfo = async () => {
   return song;
 };
 
-export const useSong = (initialData: ISongInfo | null | undefined) => {
+export const useSong = (
+  initialData: ISongInfo | null | undefined
+): {
+  song: ISongInfo;
+  isLoading: boolean;
+  isError: any;
+  mutate: Mutator;
+} => {
   const { data, error, mutate } = useSWR(`/api/song`, fetcher, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

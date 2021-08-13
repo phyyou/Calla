@@ -6,4 +6,5 @@ export interface ISongInfo {
   info: {
     [index: string]: string;
   };
+  copy: string;
 }
