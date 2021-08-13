@@ -97,7 +97,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
                 isLoading={
                   isLoading || isError || typeof song?.info === "undefined"
                 }
-                mr={{ base: null, md: "4" }}
+                mr={{ base: "0", md: "4" }}
                 isDisabled={isLoading}
                 loadingText="새로운 곡을 가져오는 중 입니다"
                 onClick={() => {
