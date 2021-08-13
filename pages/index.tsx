@@ -32,6 +32,11 @@ import { ISongInfo } from "../lib/types/song";
 import { getSongInfo, useSong } from "../lib/hooks/useSong";
 import { RepeatIcon } from "@chakra-ui/icons";
 import { event } from "../lib/ga/analytics";
+import {
+  InfoCard,
+  InfoCardContent,
+  InfoCardProperty,
+} from "../components/InfoCard";
 
 export default function Home({ initialData }: { initialData: ISongInfo }) {
   const { song, isError, isLoading, mutate } = useSong(initialData);
@@ -137,8 +142,6 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
                 <AccordionButton>
                   <Box flex="1" textAlign="left">
                     곡 상세정보
-                    <br />
-                    (주의: 커서 한눈에 보지 못함)
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
@@ -146,22 +149,19 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
 
               <AccordionPanel pb={4}>
                 {!isLoading && !isError && typeof song?.info !== "undefined" ? (
-                  <Table variant="simple">
-                    <Thead>
-                      <Tr>
+                  <>
+                    <InfoCard mb={4} maxW="4xl" mx="auto">
+                      <InfoCardContent>
                         {Object.keys(song?.info).map((keyName, i) => (
-                          <Th key={`key-${i}}`}>{keyName}</Th>
+                          <InfoCardProperty
+                            key={`info-key-${i}}`}
+                            label={keyName}
+                            value={song.info[keyName]}
+                          />
                         ))}
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      <Tr>
-                        {Object.keys(song?.info).map((keyName, i) => (
-                          <Td key={`info-${i}`}>{song.info[keyName] as any}</Td>
-                        ))}
-                      </Tr>
-                    </Tbody>
-                  </Table>
+                      </InfoCardContent>
+                    </InfoCard>
+                  </>
                 ) : null}
               </AccordionPanel>
             </AccordionItem>
