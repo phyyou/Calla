@@ -20,11 +20,13 @@ import {
   FormControl,
   FormLabel,
   Tooltip,
+  IconButton,
+  useClipboard,
 } from "@chakra-ui/react";
 
 import { ISongInfo } from "../lib/types/song";
 import { getSongInfo, useSong } from "../lib/hooks/useSong";
-import { RepeatIcon } from "@chakra-ui/icons";
+import { CopyIcon, RepeatIcon } from "@chakra-ui/icons";
 import { event } from "../lib/ga/analytics";
 import {
   InfoCard,
@@ -36,15 +38,20 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
   const { song, isError, isLoading, mutate } = useSong(initialData);
   const toast = useToast();
   const [isAutoPlay, setIsAutoPlay] = useState(false);
+  const [title, setTitle] = useState(initialData?.info["Work Title\n"]);
+  const { hasCopied, onCopy } = useClipboard(title);
 
   useEffect(() => {
     if (
       typeof window !== "undefined" &&
       typeof song?.info !== "undefined" &&
       typeof song?.info["Work Title\n"] !== "undefined"
-    )
+    ) {
       document.title = `${song?.info["Work Title\n"]} | Calla Music`;
+      setTitle(song?.info["Work Title\n"]);
+    }
   }, [song?.info]);
+
   return (
     <>
       <Head>
@@ -83,9 +90,19 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
           ) : null}
           <Box textAlign={"center"}>
             제목:{" "}
-            {!isLoading && !isError && typeof song?.info !== "undefined"
-              ? song?.info["Work Title\n"]
-              : null}
+            {!isLoading && !isError && typeof song?.info !== "undefined" ? (
+              <>
+                {song?.info["Work Title\n"]}
+                <IconButton
+                  aria-label="Copy Song Title"
+                  icon={<CopyIcon />}
+                  w={"var(--chakra-sizes-8)!important"}
+                  minW={"unset!important"}
+                  h={8}
+                  onClick={onCopy}
+                />
+              </>
+            ) : null}
             <br />
             작곡가:{" "}
             {!isLoading && !isError && typeof song?.info !== "undefined"
