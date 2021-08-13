@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
-import { getSongInfo, ISongInfo } from "./api/song";
+import { useEffect, useRef } from "react";
+
 import {
   Container,
   Table,
@@ -10,7 +11,6 @@ import {
   Th,
   Td,
   Box,
-  TableCaption,
   VStack,
   Text,
   Img,
@@ -20,9 +20,19 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Button,
+  useToast,
 } from "@chakra-ui/react";
 
-export default function Home({ song }: { song: ISongInfo }) {
+import { ISongInfo } from "../lib/types/song";
+import { getSongInfo, useSong } from "../lib/hooks/useSong";
+import { RepeatIcon } from "@chakra-ui/icons";
+
+export default function Home({ initialData }: { initialData: ISongInfo }) {
+  const { song, isError, isLoading, mutate } = useSong(initialData);
+  const toast = useToast();
+
+  useEffect(() => {}, [isError]);
   return (
     <>
       <Head>
@@ -36,14 +46,40 @@ export default function Home({ song }: { song: ISongInfo }) {
           <Img src={"/Calla.svg"} w={{ base: 16, md: 32 }}></Img>
           <Heading>Calla</Heading>
           <Text>랜덤으로 클래식 음악을 추천해줍니다.</Text>
-          <audio controls={true} autoPlay={true} loop={true}>
-            <source src={song.file}></source>
-          </audio>
+          {!isLoading && !isError ? (
+            <audio key={song.file} controls={true} autoPlay={true} loop={true}>
+              <source src={song?.file}></source>
+            </audio>
+          ) : null}
           <Box textAlign={"center"}>
-            제목: {song.info["Work Title\n"]}
+            제목:{" "}
+            {!isLoading && !isError && typeof song?.info !== "undefined"
+              ? song?.info["Work Title\n"]
+              : null}
             <br />
-            작곡가: {song.info["Composer\n"]}
+            작곡가:{" "}
+            {!isLoading && !isError && typeof song?.info !== "undefined"
+              ? song?.info["Composer\n"]
+              : null}
           </Box>
+          <Button
+            leftIcon={<RepeatIcon />}
+            isLoading={
+              isLoading || isError || typeof song?.info === "undefined"
+            }
+            isDisabled={isLoading}
+            loadingText="새로운 곡을 가져오는 중 입니다"
+            onClick={() => {
+              mutate("/api/song");
+              toast({
+                title: "새로운 곡을 가져옵니다",
+                status: "info",
+                isClosable: true,
+              });
+            }}
+          >
+            새로고침
+          </Button>
           <Accordion allowToggle>
             <AccordionItem>
               <h2>
@@ -56,23 +92,26 @@ export default function Home({ song }: { song: ISongInfo }) {
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
+
               <AccordionPanel pb={4}>
-                <Table variant="simple">
-                  <Thead>
-                    <Tr>
-                      {Object.keys(song.info).map((keyName, i) => (
-                        <Th key={`key-${i}}`}>{keyName}</Th>
-                      ))}
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    <Tr>
-                      {Object.keys(song.info).map((keyName, i) => (
-                        <Td key={`info-${i}`}>{song.info[keyName] as any}</Td>
-                      ))}
-                    </Tr>
-                  </Tbody>
-                </Table>
+                {!isLoading && !isError && typeof song?.info !== "undefined" ? (
+                  <Table variant="simple">
+                    <Thead>
+                      <Tr>
+                        {Object.keys(song?.info).map((keyName, i) => (
+                          <Th key={`key-${i}}`}>{keyName}</Th>
+                        ))}
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      <Tr>
+                        {Object.keys(song?.info).map((keyName, i) => (
+                          <Td key={`info-${i}`}>{song.info[keyName] as any}</Td>
+                        ))}
+                      </Tr>
+                    </Tbody>
+                  </Table>
+                ) : null}
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
@@ -84,6 +123,5 @@ export default function Home({ song }: { song: ISongInfo }) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const song = await getSongInfo();
-  console.log(song);
-  return { props: { song } };
+  return { props: { initialData: song } };
 };
