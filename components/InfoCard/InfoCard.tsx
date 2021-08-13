@@ -5,7 +5,8 @@ const InfoCard = (props: BoxProps) => (
   <Box
     bg={useColorModeValue("white", "gray.700")}
     rounded={{ md: "lg" }}
-    shadow="base"
+    border={"1px"}
+    borderColor={"gray.50"}
     overflow="hidden"
     {...props}
   />
