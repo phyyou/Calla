@@ -64,7 +64,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
                     status: "info",
                     isClosable: true,
                   });
-                  event("Refresh Song");
+                  event("Refresh Song by AutoPlay");
                 }
               }}
               key={song.file}
