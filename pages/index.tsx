@@ -26,7 +26,7 @@ import {
 
 import { ISongInfo } from "../lib/types/song";
 import { getSongInfo, useSong } from "../lib/hooks/useSong";
-import { CopyIcon, RepeatIcon } from "@chakra-ui/icons";
+import { CopyIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { event } from "../lib/ga/analytics";
 import {
   InfoCard,
@@ -47,7 +47,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
       typeof song?.info !== "undefined" &&
       typeof song?.info["Work Title\n"] !== "undefined"
     ) {
-      document.title = `${song?.info["Work Title\n"]} | Calla Music`;
+      document.title = `${song?.info["Work Title\n"]} | Calla`;
       setTitle(song?.info["Work Title\n"]);
     }
   }, [song?.info]);
@@ -57,16 +57,52 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
       <Head>
         <title>Calla</title>
         <meta name="description" content="Recommend Random Classical Music" />
-        <link type="image/svg+xml" rel="icon" href="/Calla.svg" />
+        <link type="image/svg+xml" rel="icon" href="/icons/Calla.svg" />
       </Head>
 
       <Container as={"main"}>
-        <VStack marginTop={{ base: "18vh", md: "10vh" }}>
-          <Img src={"/Calla.svg"} w={{ base: 16, md: 32 }}></Img>
-          <Heading>Calla</Heading>
-          <Text>랜덤으로 클래식 음악을 추천해줍니다.</Text>
+        <VStack marginTop={{ base: "20vh", md: "16vh" }}>
+          <Box d={"flex"} flexDir={"column"} alignItems={"center"}>
+            <Img src={"/icons/Calla.svg"} w={{ base: 16, md: 32 }}></Img>
+            <Heading size={"md"}>Calla</Heading>
+            <Text>랜덤으로 클래식 음악을 추천하고 재생합니다.</Text>
+          </Box>
+
+          <Box textAlign={"center"}>
+            {!isLoading && !isError && typeof song?.info !== "undefined" ? (
+              <>
+                <Heading
+                  mb={2}
+                  width={"100vw"}
+                  userSelect={"all"}
+                  onClick={onCopy}
+                >
+                  {song?.info["Work Title\n"]}
+                  {/* <IconButton
+                    aria-label="Copy Song Title"
+                    icon={<CopyIcon />}
+                    w={"var(--chakra-sizes-8)!important"}
+                    minW={"unset!important"}
+                    h={8}
+                    onClick={onCopy} 
+                  /> */}
+                </Heading>
+              </>
+            ) : null}
+            {!isLoading && !isError && typeof song?.info !== "undefined" ? (
+              <>
+                <Text mb={-1} size={"sm"}>
+                  작곡가
+                </Text>
+                <Heading mb={2} size={"md"} as={"h6"}>
+                  {song?.info["Composer\n"]}
+                </Heading>
+              </>
+            ) : null}
+          </Box>
           {!isLoading && !isError ? (
             <audio
+              style={{ marginBottom: "var(--chakra-space-4)" }}
               onEnded={(e) => {
                 e.preventDefault();
                 console.log(isAutoPlay);
@@ -88,27 +124,6 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
               <source src={song?.file}></source>
             </audio>
           ) : null}
-          <Box textAlign={"center"}>
-            제목:{" "}
-            {!isLoading && !isError && typeof song?.info !== "undefined" ? (
-              <>
-                {song?.info["Work Title\n"]}
-                <IconButton
-                  aria-label="Copy Song Title"
-                  icon={<CopyIcon />}
-                  w={"var(--chakra-sizes-8)!important"}
-                  minW={"unset!important"}
-                  h={8}
-                  onClick={onCopy}
-                />
-              </>
-            ) : null}
-            <br />
-            작곡가:{" "}
-            {!isLoading && !isError && typeof song?.info !== "undefined"
-              ? song?.info["Composer\n"]
-              : null}
-          </Box>
           <Box>
             <FormControl
               display="flex"
@@ -116,7 +131,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
               flexDir={{ base: "column", md: "row" }}
             >
               <Button
-                leftIcon={<RepeatIcon />}
+                rightIcon={<ArrowForwardIcon />}
                 isLoading={
                   isLoading || isError || typeof song?.info === "undefined"
                 }
@@ -133,7 +148,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
                   event("Refresh Song");
                 }}
               >
-                새로고침
+                새로운 곡
               </Button>
               <Box marginTop={{ base: "2", md: "0" }} d="flex" flexDir={"row"}>
                 <FormLabel htmlFor="autoplay" mb="0">

@@ -1,27 +1,38 @@
-  
 {
-    "title": "Calla Music",
-    "titleTemplate": "%s - Calla Music",
+    "title": "Calla",
+    "titleTemplate": "%s - Calla",
     "description": "Recommend Random Classical Music",
     "openGraph": {
-      "title": "Calla Music | 랜덤 클래식 음악",
-      "description": "랜덤으로 클래식 음악을 추천합니다",
-      "type": "website",
-      "locale": "ko_KR",
-      "url": "https://callamusic.net",
-      "site_name": "Calla Music",
-      "images": [
-        {
-          "url": "/Calla.svg",
-          "width": 1024,
-          "height": 1024,
-          "alt": "Calla Music"
-        }
-      ]
+        "title": "Calla | 랜덤 클래식 음악",
+        "description": "랜덤으로 클래식 음악을 추천하고 재생합니다",
+        "type": "website",
+        "locale": "ko_KR",
+        "url": "https://callamusic.net",
+        "site_name": "Calla",
+        "images": [
+            {
+                "url": "/icons/maskable_icon_x128.png",
+                "width": 128,
+                "height": 128,
+                "alt": "Calla"
+            },
+            {
+                "url": "/icons/maskable_icon_x512.png",
+                "width": 512,
+                "height": 512,
+                "alt": "Calla"
+            },
+            {
+                "url": "/icons/maskable_icon.png",
+                "width": 1024,
+                "height": 1024,
+                "alt": "Calla"
+            }
+        ]
     },
     "twitter": {
-      "handle": "@callamusic",
-      "site": "@callamusic",
-      "cardType": "summary_large_image"
+        "handle": "@calla",
+        "site": "@calla",
+        "cardType": "summary_large_image"
     }
-  }
+}
