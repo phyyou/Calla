@@ -4,12 +4,6 @@ import { useEffect, useState } from "react";
 
 import {
   Container,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   Box,
   VStack,
   Text,
@@ -158,12 +152,12 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
                             label={keyName}
                             value={song.info[keyName]}
                           />
-                          ))}
-                          <InfoCardProperty
-                            key={`info-license`}
-                            label={"IMSLP CC BY-SA 4.0"}
-                            value={song.copy}
-                          />
+                        ))}
+                        <InfoCardProperty
+                          key={`info-license`}
+                          label={"IMSLP CC BY-SA 4.0"}
+                          value={song.copy}
+                        />
                       </InfoCardContent>
                     </InfoCard>
                   </>
