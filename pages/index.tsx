@@ -47,7 +47,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
       </Head>
 
       <Container as={"main"}>
-        <VStack marginTop={{ base: "28vh", md: "10vh" }}>
+        <VStack marginTop={{ base: "18vh", md: "10vh" }}>
           <Img src={"/Calla.svg"} w={{ base: 16, md: 32 }}></Img>
           <Heading>Calla</Heading>
           <Text>랜덤으로 클래식 음악을 추천해줍니다.</Text>
