@@ -40,7 +40,10 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
   useEffect(() => {}, [isError]);
 
   useEffect(() => {
-    if (typeof window !== "undefined")
+    if (
+      typeof window !== "undefined" &&
+      typeof song?.info["Work Title\n"] !== "undefined"
+    )
       document.title = `${song?.info["Work Title\n"]} | Calla Music`;
   }, [song?.info]);
   return (
