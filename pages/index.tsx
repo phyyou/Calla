@@ -73,7 +73,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
               <>
                 <Heading
                   mb={2}
-                  width={"100vw"}
+                  width={"90vw"}
                   userSelect={"all"}
                   onClick={onCopy}
                 >
