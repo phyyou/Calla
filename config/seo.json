@@ -1,0 +1,27 @@
+  
+{
+    "title": "Calla Music",
+    "titleTemplate": "%s - Calla Music",
+    "description": "Recommend Random Classical Music",
+    "openGraph": {
+      "title": "Calla Music | 랜덤 클래식 음악",
+      "description": "랜덤으로 클래식 음악을 추천합니다",
+      "type": "website",
+      "locale": "ko_KR",
+      "url": "https://callamusic.net",
+      "site_name": "Calla Music",
+      "images": [
+        {
+          "url": "/Calla.svg",
+          "width": 1024,
+          "height": 1024,
+          "alt": "Calla Music"
+        }
+      ]
+    },
+    "twitter": {
+      "handle": "@callamusic",
+      "site": "@callamusic",
+      "cardType": "summary_large_image"
+    }
+  }

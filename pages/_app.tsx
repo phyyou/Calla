@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import theme from "../assets/theme";
+import SEO from "../components/common/SEO";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -11,9 +12,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <>
+      <SEO />
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </>
   );
 }
 export default MyApp;

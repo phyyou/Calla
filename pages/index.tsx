@@ -38,6 +38,11 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
   const [isAutoPlay, setIsAutoPlay] = useState(false);
 
   useEffect(() => {}, [isError]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined")
+      document.title = `${song?.info["Work Title\n"]} | Calla Music`;
+  }, [song?.info]);
   return (
     <>
       <Head>
