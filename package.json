@@ -24,6 +24,7 @@
     "swr": "^0.5.6"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.7",
     "@types/react": "17.0.16",
     "eslint": "7.32.0",
     "eslint-config-next": "11.0.1",

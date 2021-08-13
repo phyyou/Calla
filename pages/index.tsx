@@ -27,6 +27,7 @@ import {
 import { ISongInfo } from "../lib/types/song";
 import { getSongInfo, useSong } from "../lib/hooks/useSong";
 import { RepeatIcon } from "@chakra-ui/icons";
+import { event } from "../lib/ga/analytics";
 
 export default function Home({ initialData }: { initialData: ISongInfo }) {
   const { song, isError, isLoading, mutate } = useSong(initialData);
@@ -76,6 +77,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
                 status: "info",
                 isClosable: true,
               });
+              event("Refresh Song");
             }}
           >
             새로고침
