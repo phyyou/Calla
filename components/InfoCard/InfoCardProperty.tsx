@@ -3,8 +3,8 @@ import {
   Flex,
   FlexProps,
   useColorModeValue,
-  Center,
   Divider,
+  Tooltip,
 } from "@chakra-ui/react";
 import * as React from "react";
 
@@ -27,16 +27,31 @@ const InfoCardProperty = (props: Props) => {
       <Box
         as="dt"
         minWidth="180px"
-        w={"50%"}
+        w={{ md: "50%" }}
         paddingInlineEnd={4}
         fontWeight="semibold"
       >
         {label}
       </Box>
       <Divider mb={2} display={{ md: "none" }} />
-      <Box as="dd" w={"50%"} flex="1">
-        {value}
-      </Box>
+      <Tooltip label={value} aria-label={label}>
+        <Box
+          as="dd"
+          w={{ md: "50%" }}
+          flex="1"
+          h={"2.4rem"}
+          overflow={"hidden"}
+          lineHeight={"1.2rem"}
+          textOverflow={"ellipsis"}
+          sx={{
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            display: "-webkit-box",
+          }}
+        >
+          {value}
+        </Box>
+      </Tooltip>
     </Flex>
   );
 };
