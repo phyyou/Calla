@@ -42,15 +42,11 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
   const { hasCopied, onCopy } = useClipboard(title);
 
   useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      typeof song?.info !== "undefined" &&
-      typeof song?.info["Work Title\n"] !== "undefined"
-    ) {
-      document.title = `${song?.info["Work Title\n"]} | Calla`;
+    if (typeof window !== "undefined" && typeof song?.info !== "undefined") {
       setTitle(song?.info["Work Title\n"]);
+      document.title = `${title} - Calla`;
     }
-  }, [song?.info]);
+  }, [song?.info, title]);
 
   return (
     <>
@@ -63,7 +59,11 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
       <Container as={"main"}>
         <VStack marginTop={{ base: "20vh", md: "16vh" }}>
           <Box d={"flex"} flexDir={"column"} alignItems={"center"}>
-            <Img src={"/icons/Calla.svg"} w={{ base: 16, md: 32 }}></Img>
+            <Img
+              alt={"Logo-Calla"}
+              src={"/icons/Calla.svg"}
+              w={{ base: 16, md: 32 }}
+            ></Img>
             <Heading size={"md"}>Calla</Heading>
             <Text>랜덤으로 클래식 음악을 추천하고 재생합니다.</Text>
           </Box>
