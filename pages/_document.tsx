@@ -15,7 +15,9 @@ class MyDocument extends Document {
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <script
             async
-            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || null}`}
+            src={`https://www.googletagmanager.com/gtag/js?id=${
+              process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || null
+            }`}
           />
           <script
             dangerouslySetInnerHTML={{
@@ -23,12 +25,20 @@ class MyDocument extends Document {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || null}', {
+            gtag('config', '${
+              process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || null
+            }', {
               page_path: window.location.pathname,
             });
           `,
             }}
           />
+          {/* AdSense Script*/}
+          <script
+            data-ad-client="ca-pub-4417975448256279"
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          ></script>
         </Head>
         <body className="loading">
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
