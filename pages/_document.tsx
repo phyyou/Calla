@@ -33,7 +33,7 @@ class MyDocument extends Document {
           `,
             }}
           />
-          {/* AdSense Script*/}
+          {/* AdSense Script */}
           <script
             data-ad-client="ca-pub-4417975448256279"
             async
