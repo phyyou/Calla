@@ -6,7 +6,9 @@
 
 Calla is a Web app for **recommend and play random Classical Music**
 
-This project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and support Progressive Web App depends next-pwa
+Deployed on Vercel.
+
+This project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and support Progressive Web App depends next-pwa.
 
 This project use swr, node-html-parser, chakra-ui and other librarys.
 
