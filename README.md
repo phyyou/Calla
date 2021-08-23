@@ -4,7 +4,7 @@
   <img src="https://github.com/phyyou/Calla/blob/main/public/icons/apple-icon-180.png?raw=true" alt="Calla Music Logo" />
 </a>
 
-Calla is a Web app for **recommend and play random Classical Music**
+[Calla](https://callamusic.net) is a Web app for **recommend and play random Classical Music**
 
 Deployed on Vercel.
 
