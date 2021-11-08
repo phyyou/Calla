@@ -47,7 +47,9 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
   const router = useRouter();
 
   useEffect(() => {
+    // @ts-ignore
     if ("mediaSession" in navigator) {
+      // @ts-ignore
       navigator.mediaSession.setActionHandler("nexttrack", () => {
         mutate("/api/song");
         toast({
@@ -64,41 +66,30 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
     if (typeof window !== "undefined" && typeof song?.info !== "undefined") {
       setTitle(song?.info["Work Title\n"]);
       console.log(song?.info);
+      // @ts-ignore
       if ("mediaSession" in navigator) {
+        // @ts-ignore
         navigator.mediaSession.metadata = new MediaMetadata({
           title: title,
           artist: song?.info["Composer\n"],
         });
 
+        // @ts-ignore
         navigator.mediaSession.setActionHandler("play", async () => {
           await audioRef.current?.play();
         });
+        // @ts-ignore
         navigator.mediaSession.setActionHandler("pause", () => {
           audioRef.current?.pause();
         });
         audioRef.current?.addEventListener("play", () => {
+          // @ts-ignore
           navigator.mediaSession.playbackState = "playing";
         });
         audioRef.current?.addEventListener("pause", () => {
+          // @ts-ignore
           navigator.mediaSession.playbackState = "paused";
         });
-
-        // const defaultSkipTime = 10; /* Time to skip in seconds by default */
-
-        // navigator.mediaSession.setActionHandler("seekbackward", (details) => {
-        //   const skipTime = details.seekOffset || defaultSkipTime;
-        //   video.currentTime = Math.max(video.currentTime - skipTime, 0);
-        //   // TODO: Update playback state.
-        // });
-
-        // navigator.mediaSession.setActionHandler("seekforward", (details) => {
-        //   const skipTime = details.seekOffset || defaultSkipTime;
-        //   video.currentTime = Math.min(
-        //     video.currentTime + skipTime,
-        //     video.duration
-        //   );
-        //   // TODO: Update playback state.
-        // });
       }
     }
   }, [song?.info, title, audioRef]);
