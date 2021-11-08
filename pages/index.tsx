@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import {
   Container,
@@ -26,7 +26,7 @@ import {
 
 import { ISongInfo } from "../lib/types/song";
 import { getSongInfo, useSong } from "../lib/hooks/useSong";
-import { CopyIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { ArrowRightIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { event } from "../lib/ga/analytics";
 import {
   InfoCard,
@@ -34,19 +34,74 @@ import {
   InfoCardProperty,
 } from "../components/InfoCard";
 
+import { useRouter } from "next/router";
+
 export default function Home({ initialData }: { initialData: ISongInfo }) {
   const { song, isError, isLoading, mutate } = useSong(initialData);
   const toast = useToast();
   const [isAutoPlay, setIsAutoPlay] = useState(false);
   const [title, setTitle] = useState(initialData?.info["Work Title\n"]);
   const { hasCopied, onCopy } = useClipboard(title);
+  const audioRef = useRef<HTMLVideoElement>(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.setActionHandler("nexttrack", () => {
+        mutate("/api/song");
+        toast({
+          title: "새로운 곡을 가져옵니다",
+          status: "info",
+          isClosable: true,
+        });
+        event("Refresh Song by media session api");
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined" && typeof song?.info !== "undefined") {
       setTitle(song?.info["Work Title\n"]);
-      document.title = `${title} - Calla`;
+      console.log(song?.info);
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: title,
+          artist: song?.info["Composer\n"],
+        });
+
+        navigator.mediaSession.setActionHandler("play", async () => {
+          await audioRef.current?.play();
+        });
+        navigator.mediaSession.setActionHandler("pause", () => {
+          audioRef.current?.pause();
+        });
+        audioRef.current?.addEventListener("play", () => {
+          navigator.mediaSession.playbackState = "playing";
+        });
+        audioRef.current?.addEventListener("pause", () => {
+          navigator.mediaSession.playbackState = "paused";
+        });
+
+        // const defaultSkipTime = 10; /* Time to skip in seconds by default */
+
+        // navigator.mediaSession.setActionHandler("seekbackward", (details) => {
+        //   const skipTime = details.seekOffset || defaultSkipTime;
+        //   video.currentTime = Math.max(video.currentTime - skipTime, 0);
+        //   // TODO: Update playback state.
+        // });
+
+        // navigator.mediaSession.setActionHandler("seekforward", (details) => {
+        //   const skipTime = details.seekOffset || defaultSkipTime;
+        //   video.currentTime = Math.min(
+        //     video.currentTime + skipTime,
+        //     video.duration
+        //   );
+        //   // TODO: Update playback state.
+        // });
+      }
     }
-  }, [song?.info, title]);
+  }, [song?.info, title, audioRef]);
 
   return (
     <>
@@ -116,6 +171,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
                   event("Refresh Song by AutoPlay");
                 }
               }}
+              ref={audioRef}
               key={song.file}
               controls={true}
               autoPlay={true}
@@ -168,6 +224,17 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
                 />
               </Box>
             </FormControl>
+            <Button
+              mt={"2"}
+              rightIcon={<ArrowRightIcon />}
+              onClick={() => {
+                router.push("/transformer");
+              }}
+              colorScheme="teal"
+              variant="outline"
+            >
+              클래식 음악 생성 인공지능
+            </Button>
           </Box>
           <Accordion allowToggle>
             <AccordionItem>
