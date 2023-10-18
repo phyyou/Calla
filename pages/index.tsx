@@ -97,7 +97,13 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
   return (
     <>
       <Head>
-        <title>Calla</title>
+        <title>
+          {
+            !isLoading && !isError && typeof song?.info !== "undefined" && typeof song?.info["Composer\n"] !== "undefined" ? (
+              `${title}(${song?.info["Composer\n"]}) - Calla Music`
+            ) : "Calla Music"
+          }
+        </title>
         <meta name="description" content="Recommend Random Classical Music" />
         <link type="image/svg+xml" rel="icon" href="/icons/Calla.svg" />
       </Head>
