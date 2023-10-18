@@ -100,7 +100,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
         <title>
           {
             !isLoading && !isError && typeof song?.info !== "undefined" && typeof song?.info["Composer\n"] !== "undefined" ? (
-              `${title}(${song?.info["Composer\n"]}) - Calla Music`
+              `${title} (${song?.info["Composer\n"].trimEnd()}) - Calla Music`
             ) : "Calla Music"
           }
         </title>
