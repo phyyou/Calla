@@ -40,7 +40,7 @@ class MyDocument extends Document {
             crossOrigin="anonymous"
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4417975448256279"
           ></script>
-          <meta name="google-adsense-account" content="ca-pub-4417975448256279">
+          <meta name="google-adsense-account" content="ca-pub-4417975448256279" />
         </Head>
         <body className="loading">
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
