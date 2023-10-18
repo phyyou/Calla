@@ -215,7 +215,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
                 />
               </Box>
             </FormControl>
-            <Button
+            {/* <Button
               mt={"2"}
               rightIcon={<ArrowRightIcon />}
               onClick={() => {
@@ -225,7 +225,7 @@ export default function Home({ initialData }: { initialData: ISongInfo }) {
               variant="outline"
             >
               클래식 음악 생성 인공지능
-            </Button>
+            </Button> */}
           </Box>
           <Accordion allowToggle>
             <AccordionItem>
